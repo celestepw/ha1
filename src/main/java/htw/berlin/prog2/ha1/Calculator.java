@@ -10,6 +10,8 @@ public class Calculator {
 
     private String screen = "0";
 
+    private boolean alreadyUsed;
+
     private double latestValue;
 
     private String latestOperation = "";
@@ -19,6 +21,14 @@ public class Calculator {
      */
     public String readScreen() {
         return screen;
+    }
+
+    public String getLatestOperation() {
+        return latestOperation;
+    }
+
+    public double getLatestValue() {
+        return latestValue;
     }
 
     /**
@@ -45,9 +55,11 @@ public class Calculator {
      * im Ursprungszustand ist.
      */
     public void pressClearKey() {
-        screen = "0";
+        if(alreadyUsed) {
         latestOperation = "";
-        latestValue = 0.0;
+        latestValue = 0.0;} else {
+        screen = "0";
+        alreadyUsed = true;}
     }
 
     /**
@@ -126,8 +138,12 @@ public class Calculator {
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
+        latestValue = result;
         if(screen.equals("Infinity")) screen = "Error";
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
     }
 }
+/*
+Denkansätze aus der Übung umgesetzt
+ */
