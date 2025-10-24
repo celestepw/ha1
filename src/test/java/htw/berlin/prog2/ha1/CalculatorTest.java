@@ -103,6 +103,45 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("should set latestValue and latestOperation back to initial setting if the clear key is pressed twice")
+    void testPressClearKeyTwice() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(1);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(2);
+        calc.pressEqualsKey();
+        calc.pressClearKey();
+
+        assertEquals(3, calc.getLatestValue());
+        assertEquals("+", calc.getLatestOperation());
+
+        calc.pressClearKey();
+        String expected = "0";
+        String actual = calc.readScreen();
+        assertEquals(0, calc.getLatestValue());
+        assertEquals("", calc.getLatestOperation());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should update latestValue after pressing equals key")
+    void testResultAsLatestValue() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(3);
+        calc.pressBinaryOperationKey("+");
+        assertEquals(3, calc.getLatestValue());
+        calc.pressDigitKey(7);
+        calc.pressEqualsKey();
+        assertEquals(10, calc.getLatestValue());
+
+
+
+    }
+
 }
 /*
 Denkansätze aus der Übung umgesetzt
